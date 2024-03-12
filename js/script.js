@@ -1,36 +1,40 @@
-const slides = document.querySelectorAll(".slides img");
-let slideIndex = 0;
-let intervalId = null;
+const { createApp } = Vue;
 
-document.addEventListener("DOMContentLoaded", initializeSlider);
+createApp({
+  data() {
+    return {
+      slides: [
+        "./img/01.webp",
+        "./img/02.webp",
+        "./img/03.webp",
+        "./img/04.webp",
+        "./img/05.webp",
+      ],
+      counter: 0,
+      isActive: true,
+    };
+  },
 
-function initializeSlider(){
-  if (slides.length > 0) {
-    slides[slideIndex].classList.add("displaySlide");
-    intervalId = setInterval(nextSlide, 3000);
-  }
-}
+  methods: {
+    nextPrev(isNext) {
+      isNext ? this.counter++ : this.counter--;
+      if (this.counter === this.slides.length) {
+        this.counter = 0;
+      } else if (this.counter < 0) {
+        this.counter = this.slides.length - 1;
+      }
+    },
 
-function showSlide(index){
-  if (index >= slides.length) {
-    slideIndex = 0;
-  }else if(index < 0){
-    slideIndex = slides.length - 1;
-  }
+    autoPlay() {
+      setInterval(() => {
+        if (this.isActive) {
+          this.nextPrev(true);
+        }
+      }, 3000);
+    },
+  },
 
-  slides.forEach(slide => {
-  slide.classList.remove("displaySlide");
-  });
-  slides[slideIndex].classList.add("displaySlide");
-}
-
-function prevSlide(){
-  clearInterval(intervalId);
-  slideIndex--;
-  showSlide(slideIndex);
-}
-
-function nextSlide(){
-  slideIndex++;
-  showSlide(slideIndex);
-}
+  mounted() {
+    this.autoPlay();
+  },
+}).mount("#app");
