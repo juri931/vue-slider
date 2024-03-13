@@ -12,6 +12,7 @@ createApp({
       ],
       counter: 0,
       isActive: true,
+      goNext: true,
     };
   },
 
@@ -31,6 +32,10 @@ createApp({
           this.nextPrev(true);
         }
       }, 3000);
+    },
+
+    invertSlides() {
+      this.nextPrev(!goNext);
     },
   },
 

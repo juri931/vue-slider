@@ -17,7 +17,7 @@
 <body>
 
   <div id="app" class="main-wrapper">
-    <div class="slider" @mouseenter="isActive = false" @mouseleave="isActive = true">
+    <div class="slider" @mouseenter="isActive = false" @mouseleave="isActive = true" @dblclick="invertSlides">
       <div class="items-wrapper">
         <img class="img" :src="slides[counter]">
       </div>
